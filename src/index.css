@@ -1,0 +1,22 @@
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global Variables */
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #1e40af;
+  --background-light: #f8fafc;
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+  --danger-color: #ef4444;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+}

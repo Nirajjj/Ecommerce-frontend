@@ -1,0 +1,19 @@
+.btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.btnDisabled {
+  background-color: var(--text-light);
+  cursor: not-allowed;
+}
