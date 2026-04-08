@@ -1,9 +1,10 @@
+import Header from "@/components/Header";
 import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-white shadow p-4">Public/Customer Navbar</header>
+      <Header />
       <main className="flex-1 p-4">
         <Outlet />
       </main>

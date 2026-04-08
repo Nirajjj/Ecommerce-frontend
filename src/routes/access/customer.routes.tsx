@@ -10,15 +10,11 @@ const customerRoutes: RouteObject[] = [
     element: (
       // Depending on your logic, this could also just be a basic AuthGuard
       // if sellers/admins can also buy things.
-      <RoleGuards requiredRoles={["customer", "seller"]} />
+      <RoleGuards requiredRoles={["customer", "seller"]}>
+        <ProtectedLayout />
+      </RoleGuards>
     ),
-    children: [
-      {
-        path: "", // Resolves to /user
-        element: <ProtectedLayout />, // Rendered inside RoleGuards' Outlet (if user is not authenticated)
-        children: [...customerFeatureRoutes, ...checkoutRoutes],
-      },
-    ],
+    children: [...customerFeatureRoutes, ...checkoutRoutes],
   },
 ];
 

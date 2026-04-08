@@ -1,14 +1,16 @@
-import { Navigate, Outlet } from "react-router-dom";
+import useAuthStore from "@/store/useAuthStore";
+import { Navigate } from "react-router-dom";
 // import { useAuth } from "../../hooks/useAuth";
+
+type Role = "customer" | "admin" | "seller";
 interface RoleGuardsProps {
-  requiredRoles?: ("customer" | "admin" | "seller")[];
+  requiredRoles?: Role[];
+  children: React.ReactNode;
 }
-const RoleGuards = ({ requiredRoles }: RoleGuardsProps) => {
+const RoleGuards = ({ requiredRoles = [], children }: RoleGuardsProps) => {
   //   const { user, isLoading } = useAuth();
-  const { user, isLoading } = {
-    user: { roles: ["customer"] },
-    isLoading: true,
-  };
+  const user = useAuthStore((state) => state.user);
+  const isLoading = useAuthStore((state) => state.isLoading);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -21,7 +23,7 @@ const RoleGuards = ({ requiredRoles }: RoleGuardsProps) => {
     return <Navigate to="/profile" />; // Or error page
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 };
 
 export default RoleGuards;
