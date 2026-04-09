@@ -1,0 +1,36 @@
+.categoryNav {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0 1rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  overflow-x: auto;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE & Edge */
+}
+
+.categoryNav::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.categoryNav > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  /* gap: 0.5rem; */
+}
+
+.categoryNav > div > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  /* stroke: var(--primary-500); */
+  color: var(--primary-500);
+}
+
+.categoryNav > div > span {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-wrap: nowrap;
+}

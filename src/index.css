@@ -1,22 +1,220 @@
-/* CSS Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* 📄 src/index.css */
+
+:root {
+  /* =========================================
+     1. COLOR PALETTE (Indigo & Orange Theme)
+     ========================================= */
+  /* Primary (Headers, Links, Active States) */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5; /* Main Brand Color */
+  --primary-700: #4338ca;
+
+  /* Secondary / Accent (Buttons, Badges, Highlights) */
+  --accent-50: #fff7ed;
+  --accent-500: #f97316;
+  --accent-600: #ea580c; /* Main Action Color */
+
+  /* Semantic Colors (System States) */
+  --success: #10b981; /* Green for "Order Placed", "In Stock" */
+  --danger: #ef4444; /* Red for "Out of Stock", Errors */
+  --warning: #f59e0b; /* Yellow for Ratings, Alerts */
+  --info: #3b82f6; /* Blue for Tooltips, Info */
+
+  /* Neutrals (Text, Backgrounds, Borders) */
+  --bg-main: #f8fafc; /* Very light gray for the body background */
+  --bg-surface: #ffffff; /* Pure white for product cards and headers */
+
+  --text-main: #0f172a; /* Near black for headings */
+  --text-muted: #64748b; /* Gray for descriptions, secondary text */
+  --text-light: #94a3b8; /* Lighter gray for placeholders */
+
+  --border-light: #e2e8f0;
+  --border-dark: #cbd5e1;
+
+  /* =========================================
+     2. TYPOGRAPHY
+     ========================================= */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+
+  /* =========================================
+     3. SPACING (4px Scale)
+     ========================================= */
+  --space-0: 0;
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+
+  /* =========================================
+     4. BORDERS & RADIUS
+     ========================================= */
+  --radius-sm: 4px;
+  --radius-md: 8px; /* Standard for cards/buttons */
+  --radius-lg: 12px;
+  --radius-full: 9999px; /* For circular profile pictures */
+
+  /* =========================================
+     5. SHADOWS & ELEVATION
+     ========================================= */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Product Cards */
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Modals, Dropdowns */
+
+  /* =========================================
+     6. Z-INDEX (Layering System)
+     ========================================= */
+  --z-hide: -1;
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200; /* Navbar */
+  --z-overlay: 300; /* Modal backdrop */
+  --z-modal: 400; /* Modal content */
+  --z-toast: 500; /* Notifications */
 }
 
-/* Global Variables */
-:root {
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
-  --background-light: #f8fafc;
-  --text-dark: #0f172a;
-  --text-light: #64748b;
-  --danger-color: #ef4444;
+/* =========================================
+   7. LAYOUT UTILITIES 
+   ========================================= */
+
+.container {
+  width: 100%;
+  /* 1280px or 1440px is the industry standard for e-commerce desktop max-width */
+  max-width: 1280px;
+  /* 'auto' on left and right margins perfectly centers the div on large screens */
+  margin-left: auto;
+  margin-right: auto;
+  /* Prevents content from touching the screen edges on mobile phones */
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+/* BREAKPOINT REFERENCE (Use these exactly in your CSS modules):
+  Mobile:    (max-width: 639px)
+  Tablet:    (min-width: 640px) and (max-width: 1023px)
+  Desktop:   (min-width: 1024px)
+*/
+
+/* =========================================
+   8. ACCESSIBILITY & FOCUS
+   ========================================= */
+
+/* Remove default browser outlines */
+*:focus {
+  outline: none;
+}
+
+/* Add a custom, brand-matching focus ring for keyboard users */
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   9. IMAGE UTILITIES
+   ========================================= */
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  /* Crops the image perfectly without stretching it */
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-contain {
+  width: 100%;
+  height: 100%;
+  /* Ensures the whole product is visible without cropping (Best for Flipkart style) */
+  object-fit: contain;
+  object-position: center;
+  background-color: var(--bg-surface);
+}
+/* =========================================
+   CSS RESET & BASE STYLES
+   ========================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  font-family: "Inter", system-ui, sans-serif;
-  background-color: var(--background-light);
-  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (max-width: 768px)
+   ========================================= */
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    /* 1280px or 1440px is the industry standard for e-commerce desktop max-width */
+    max-width: 1280px;
+    /* 'auto' on left and right margins perfectly centers the div on large screens */
+    margin-left: auto;
+    margin-right: auto;
+    /* Prevents content from touching the screen edges on mobile phones */
+    padding-left: var(--space-1);
+    padding-right: var(--space-1);
+  }
 }

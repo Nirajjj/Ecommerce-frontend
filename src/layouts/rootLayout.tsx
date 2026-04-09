@@ -1,14 +1,14 @@
-import Header from "@/components/Header";
+import Header from "@/components/global/Header";
 import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="container">
       <Header />
-      <main className="flex-1 p-4">
+      <main>
         <Outlet />
       </main>
-      <footer className="bg-gray-800 text-white p-4">Global Footer</footer>
+      <footer>Global Footer</footer>
     </div>
   );
 };

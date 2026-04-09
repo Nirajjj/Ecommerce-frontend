@@ -1,5 +1,4 @@
 import { RouterProvider } from "react-router-dom";
-import "./App.css";
 import appRouter from "./routes/router";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";

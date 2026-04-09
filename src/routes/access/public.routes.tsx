@@ -1,13 +1,14 @@
 import RootLayout from "@/layouts/rootLayout";
 import type { RouteObject } from "react-router-dom";
 import productRoutes from "../features/product.routes";
+import Home from "@/pages/public/home/Home";
 
 const publicRoutes: RouteObject[] = [
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      { index: true, element: <h1>Home</h1> },
+      { index: true, element: <Home /> },
       ...productRoutes,
       { index: true, element: <h1>Home</h1> },
       { path: "login", element: <h1>Login</h1> },

@@ -6,16 +6,14 @@ import sellerFeatureRoutes from "../features/sellerFeature.routes";
 const sellerAccessRoutes: RouteObject[] = [
   {
     path: "/seller",
-    element: <RoleGuards requiredRoles={["seller"]} />,
+    element: (
+      <RoleGuards requiredRoles={["seller"]}>
+        <SellerLayout />
+      </RoleGuards>
+    ),
     children: [
-      {
-        path: "", // Resolves to /seller
-        element: <SellerLayout />, // Rendered inside RoleGuards' Outlet
-        children: [
-          // Rendered inside SellerLayout's Outlet
-          ...sellerFeatureRoutes,
-        ],
-      },
+      // Rendered inside SellerLayout's Outlet
+      ...sellerFeatureRoutes,
     ],
   },
 ];

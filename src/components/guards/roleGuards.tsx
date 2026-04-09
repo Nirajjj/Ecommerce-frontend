@@ -9,6 +9,7 @@ interface RoleGuardsProps {
 }
 const RoleGuards = ({ requiredRoles = [], children }: RoleGuardsProps) => {
   //   const { user, isLoading } = useAuth();
+  console.log(requiredRoles);
   const user = useAuthStore((state) => state.user);
   const isLoading = useAuthStore((state) => state.isLoading);
 
@@ -20,7 +21,7 @@ const RoleGuards = ({ requiredRoles = [], children }: RoleGuardsProps) => {
     requiredRoles!.length &&
     !requiredRoles!.some((role) => user.roles.includes(role))
   ) {
-    return <Navigate to="/profile" />; // Or error page
+    return <Navigate to="/unauthorized" />; // Or error page
   }
 
   return <>{children}</>;

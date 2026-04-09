@@ -1,0 +1,11 @@
+.heroWrapper {
+  height: 40vh;
+  padding: 1rem 0;
+}
+
+.heroImage {
+  width: 100%;
+  height: 30vh;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
