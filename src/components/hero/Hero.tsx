@@ -26,7 +26,18 @@ const Hero = () => {
       <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={20}
-        slidesPerView={2.5}
+        slidesPerView={1.5}
+        breakpoints={{
+          280: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 1.8,
+          },
+          1024: {
+            slidesPerView: 2.5,
+          },
+        }}
         autoplay={{
           delay: 5000,
           disableOnInteraction: false,

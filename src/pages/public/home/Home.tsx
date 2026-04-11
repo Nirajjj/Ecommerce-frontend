@@ -1,31 +1,43 @@
-import CategoryNav from "@/components/categoryNav/CategoryNav";
+import CategorySection from "@/components/categorySection/CategorySection";
 import Hero from "@/components/hero/Hero";
+import ErrorState from "@/components/states/ErrorState";
+import { useHomeCategories } from "@/hooks/useProductByCategory";
+import toast from "react-hot-toast";
 
 const Home = () => {
-  // const heroData = [
-  //   {
-  //     image:
-  //       "https://res.cloudinary.com/dbozdghfi/image/upload/v1775735692/Discover_the_new_orange_iPhone_xucrg0.png",
-  //     link: "/product/69cf7c88fb9a0a7862ec4fc3",
-  //     title: "Apple iPhone 14 Pro Max",
-  //   },
-  //   {
-  //     image:
-  //       "https://res.cloudinary.com/dbozdghfi/image/upload/v1775735692/Discover_the_new_orange_iPhone_xucrg0.png",
-  //     link: "/product/69cf7c88fb9a0a7862ec4fc3",
-  //     title: "Apple iPhone 14 Pro Max",
-  //   },
-  //   {
-  //     image:
-  //       "https://res.cloudinary.com/dbozdghfi/image/upload/v1775735692/Discover_the_new_orange_iPhone_xucrg0.png",
-  //     link: "/product/69cf7c88fb9a0a7862ec4fc3",
-  //     title: "Apple iPhone 14 Pro Max",
-  //   },
-  // ];
+  const { data: products, isLoading, isError, errors } = useHomeCategories();
+  console.log(products);
+  if (isLoading) return <div>Loading categories...</div>;
+
+  if (isError || errors.length) {
+    toast.error("Failed to load products");
+
+    return (
+      <ErrorState
+        title="Failed to load products"
+        message="Please check your connection and try again."
+        onRetry={() => window.location.reload()}
+      />
+    );
+  }
+
+  // const Electronics = products.Electronics?.data ?? {
+  //   page: 1,
+  //   limit: 0,
+  //   totalPages: 0,
+  //   totalProducts: 0,
+  //   products: [],
+  //   categoryName: "Electronics",
+  // };
+
   return (
     <div>
-      <CategoryNav />
       <Hero />
+      {Object.keys(products).map((category) => {
+        const product = products[category];
+        if (!product) return null;
+        return <CategorySection key={category} product={products[category]!} />;
+      })}
     </div>
   );
 };

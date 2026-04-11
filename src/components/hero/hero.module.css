@@ -5,7 +5,44 @@
 
 .heroImage {
   width: 100%;
-  height: 30vh;
+  height: 70vh;
   object-fit: cover;
   border-radius: var(--radius-lg);
+}
+
+/* Mobile (Small devices) */
+@media (max-width: 480px) {
+  .heroWrapper {
+    height: 25vh;
+    padding: 0.5rem 0;
+  }
+
+  .heroImage {
+    height: 20vh;
+  }
+}
+
+/* Mobile (Medium devices) */
+@media (max-width: 768px) {
+  .heroWrapper {
+    height: 30vh;
+    padding: 0.75rem 0;
+  }
+
+  .heroImage {
+    height: 25vh;
+  }
+}
+
+/* Tablet and above */
+@media (min-width: 769px) {
+  .heroWrapper {
+    height: 40vh;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .heroImage {
+    height: 40vh;
+  }
 }

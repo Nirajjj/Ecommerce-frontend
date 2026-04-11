@@ -8,7 +8,19 @@ export interface Product {
   seller: string;
   images: { url: string; public_id: string }[];
 }
-
+export interface PaginatedData {
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalProducts: number;
+  products: Product[];
+  categoryName: string;
+}
+export interface ProductPromise {
+  data: PaginatedData;
+  message: string;
+  status: string;
+}
 export interface CartItem {
   _id: string;
   product: string;
