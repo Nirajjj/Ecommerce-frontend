@@ -14,7 +14,7 @@ export interface PaginatedData {
   totalPages: number;
   totalProducts: number;
   products: Product[];
-  categoryName: string;
+  categoryDetails: Record<string, string>;
 }
 export interface ProductPromise {
   data: PaginatedData;

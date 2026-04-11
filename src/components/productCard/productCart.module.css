@@ -1,0 +1,115 @@
+.card {
+  position: relative;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #eee;
+  width: 200px;
+}
+
+.card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageContainer img {
+  max-height: 160px;
+  object-fit: contain;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  color: #222;
+  line-height: 1.4;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ratingBox {
+  background: #388e3c;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.reviewCount {
+  font-size: 12px;
+  color: #777;
+}
+
+.priceSection {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.mrp {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 13px;
+}
+
+.discount {
+  color: #388e3c;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.wishlist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #bbb;
+}
+
+.wishlist:hover {
+  color: red;
+}
+
+.sponsored {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  color: #888;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 12px;
+  background: #00a859;
+  color: white;
+  padding: 3px 6px;
+  border-radius: 4px;
+}

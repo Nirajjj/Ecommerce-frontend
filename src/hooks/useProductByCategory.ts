@@ -1,4 +1,4 @@
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { getProductsByCategory } from "@/services/product.service";
 import type { ProductPromise } from "@/types";
 import { CATEGORIES } from "@/constants/categories";
@@ -54,4 +54,18 @@ export const useHomeCategories = () => {
     isError,
     errors,
   };
+};
+
+export const useProductsByCategory = (
+  category: string,
+  page: number,
+  limit: number,
+) => {
+  return useQuery<ProductPromise>({
+    queryKey: ["products", category, page, limit],
+
+    queryFn: () => getProductsByCategory(category, page, limit),
+
+    enabled: !!category, // prevents query from running if category is undefined
+  });
 };

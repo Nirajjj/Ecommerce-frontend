@@ -1,3 +1,4 @@
+import Products from "@/pages/public/Products/Products";
 import type { RouteObject } from "react-router-dom";
 
 const productRoutes: RouteObject[] = [
@@ -6,8 +7,8 @@ const productRoutes: RouteObject[] = [
     element: <div>Product</div>,
   },
   {
-    path: "/products",
-    element: <div>Products</div>,
+    path: "/products/:categoryId",
+    element: <Products />,
   },
   {
     path: "/cart",

@@ -1,0 +1,49 @@
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  color: var(--primary-600);
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageNumber {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--primary-600);
+  border-radius: 50%;
+  font-weight: 600;
+  color: var(--primary-600);
+  cursor: pointer;
+}
+
+.activePage {
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--primary-600);
+  border-radius: 50%;
+  font-weight: 600;
+
+  cursor: pointer;
+  background-color: var(--primary-600);
+  color: white;
+}

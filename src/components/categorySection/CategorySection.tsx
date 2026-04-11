@@ -1,14 +1,17 @@
 import type { ProductPromise } from "@/types";
 import styles from "./categorySection.module.css";
 import { FiArrowRightCircle } from "react-icons/fi";
+import { Link } from "react-router-dom";
 const CategorySection = ({ product }: { product: ProductPromise }) => {
   console.log(product);
-  const { categoryName } = product.data;
+  const { id, name } = product.data.categoryDetails;
   return (
     <div className={styles.container}>
-      <FiArrowRightCircle className={styles.arrowRight} size={40} />
+      <Link to={`/products/${id}`}>
+        <FiArrowRightCircle className={styles.arrowRight} size={40} />
+      </Link>
 
-      <h2>{categoryName}</h2>
+      <h2>{name}</h2>
       <div className={styles.product}>
         {product.data.products.map((product) => (
           <div key={product._id} className={styles.productCard}>

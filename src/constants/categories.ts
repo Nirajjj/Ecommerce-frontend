@@ -1,4 +1,8 @@
 export const CATEGORIES = {
+  forYou: {
+    id: "/",
+    name: "For You",
+  },
   fashion: {
     id: "69cfc91d6e518698a9fb0a85",
     name: "Fashion",

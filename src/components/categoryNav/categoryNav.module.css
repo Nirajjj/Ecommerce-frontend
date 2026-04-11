@@ -2,35 +2,42 @@
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  padding: 0 1rem;
-  border-radius: var(--radius-md);
+  padding: 1rem;
+
   background-color: var(--bg-surface);
   overflow-x: auto;
 
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE & Edge */
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-dark);
 }
 
 .categoryNav::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
-.categoryNav > div {
+.navLink {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+
   /* gap: 0.5rem; */
 }
 
-.categoryNav > div > svg {
+.navLink > svg {
   width: 1.5rem;
   height: 1.5rem;
   /* stroke: var(--primary-500); */
   color: var(--primary-500);
 }
 
-.categoryNav > div > span {
+.navLink > span {
   font-size: var(--text-sm);
   font-weight: 500;
   text-wrap: nowrap;
+}
+
+.selected {
+  border-bottom: 3px solid var(--primary-500);
 }
