@@ -1,0 +1,42 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--primary-600);
+  background-color: var(--primary-600);
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid var(--primary-600);
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  color: var(--primary-600);
+  cursor: pointer;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,118 @@
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.cartLeft {
+  background: white;
+}
+
+.cartHeader {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 2px solid #eee;
+  padding: 1rem;
+}
+
+.activeTab {
+  color: #2874f0;
+  border-bottom: 2px solid #2874f0;
+  padding-bottom: 5px;
+}
+
+.cartItem {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.productImage {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.productInfo {
+  flex: 1;
+}
+
+.priceRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.discount {
+  color: green;
+  font-weight: bold;
+}
+
+.qtyRow {
+  margin-top: 8px;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 1rem;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  color: #2874f0;
+  cursor: pointer;
+}
+
+.buyNow {
+  font-weight: bold;
+}
+
+.priceDetails {
+  background: white;
+  padding: 1rem;
+  border: 1px solid #eee;
+  height: fit-content;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.green {
+  color: green;
+}
+
+.placeOrder {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: #fb641b;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}

@@ -5,26 +5,65 @@ export interface Product {
   price: number;
   category: string;
   stock: number;
+  mrp: number;
   seller: string;
   images: { url: string; public_id: string }[];
 }
+
 export interface PaginatedData {
   page: number;
   limit: number;
   totalPages: number;
   totalProducts: number;
   products: Product[];
-  categoryDetails: Record<string, string>;
+  categoryDetails?: Record<string, string>;
+}
+export interface CategoryProductPromise {
+  data: PaginatedData;
+  message: string;
+  status: string;
+}
+export interface SearchProductData {
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalProducts: number;
+  products: Product[];
+}
+export interface SearchProductPromise {
+  data: PaginatedData;
+  message: string;
+  status: string;
+}
+
+export interface category {
+  _id: string;
+  name: string;
+  description: string;
+}
+export interface SingleProduct {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: category;
+  stock: number;
+  seller: string;
+  images: { url: string; public_id: string }[];
 }
 export interface ProductPromise {
-  data: PaginatedData;
+  data: SingleProduct;
   message: string;
   status: string;
 }
 export interface CartItem {
   _id: string;
-  product: string;
+  name: string;
+  description: string;
+  price: number;
   quantity: number;
+  mrp: number;
+  images: { url: string; public_id: string }[];
 }
 
 export interface Cart {
@@ -56,15 +95,4 @@ export interface Order {
   status: "pending" | "shipped" | "delivered" | "cancelled" | "processing";
   razorpayOrderId: string;
   razorpayPaymentId: string;
-}
-
-export interface UserDocument {
-  // change the name of the interface to avoid confusion with the model change to IUser or
-  _id: string;
-  name: string;
-  gender: "male" | "female" | "other";
-  phoneNumber: string;
-  email: string;
-  role: string;
-  isActive: string;
 }

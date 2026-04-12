@@ -1,5 +1,5 @@
 import type { Product } from "@/types";
-import styles from "./productCart.module.css";
+import styles from "./productCard.module.css";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 

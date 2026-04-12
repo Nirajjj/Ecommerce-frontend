@@ -1,18 +1,20 @@
+import Cart from "@/pages/public/Cart/Cart";
+import Product from "@/pages/public/Product/Product";
 import Products from "@/pages/public/Products/Products";
 import type { RouteObject } from "react-router-dom";
 
 const productRoutes: RouteObject[] = [
   {
     path: "/product/:id",
-    element: <div>Product</div>,
+    element: <Product />,
   },
   {
     path: "/products/:categoryId",
-    element: <Products />,
+    element: <Products id={""} />,
   },
   {
     path: "/cart",
-    element: <div>Cart</div>,
+    element: <Cart />,
   },
 ];
 

@@ -1,19 +1,23 @@
-import ProductCard from "@/components/productCard/ProductCart";
+import ProductCard from "@/components/productCard/ProductCard";
 import { CATEGORIES } from "@/constants/categories";
 import { useProductsByCategory } from "@/hooks/useProductByCategory";
 import styles from "./Products.module.css";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import ProductCartSkeleton from "@/components/skeleton/ProductCardSkeleton";
-const Products = () => {
+const Products = ({ id }: { id: string }) => {
   const [page, setPage] = useState(1);
+  const [searchParam] = useSearchParams();
+  const searchTerm = searchParam.get("q");
   const limit = 16;
   const { categoryId } = useParams();
+
   const { data, error, isLoading } = useProductsByCategory(
-    categoryId || CATEGORIES.electronics.id,
+    categoryId || id || CATEGORIES.electronics.id,
     page,
     limit,
+    searchTerm,
   );
   const totalPages = data?.data.totalPages ?? 0;
 
@@ -46,7 +50,9 @@ const Products = () => {
     <div>
       <div className={styles.productsContainer}>
         {data!.data.products.map((product) => (
-          <ProductCard key={product._id} product={product} />
+          <Link to={`/product/${product._id}`} key={product._id}>
+            <ProductCard key={product._id} product={product} />
+          </Link>
         ))}
       </div>
       <div className={styles.pagination}>

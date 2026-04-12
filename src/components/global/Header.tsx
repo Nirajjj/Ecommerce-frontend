@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import useAuthStore from "@/store/useAuthStore";
 import {
@@ -13,8 +13,12 @@ import { FaStore } from "react-icons/fa";
 import { useState } from "react";
 import useCartStore from "@/store/useCartStore";
 import CategoryNav from "../categoryNav/CategoryNav";
+import Modal from "../Modal/modal";
+import Login from "../Authentication/Login";
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
+  const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const cartItems = useCartStore((state) => state.cartItems);
   const logout = useAuthStore((state) => state.logout);
@@ -22,9 +26,16 @@ const Header = () => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(searchTerm);
+    navigate("/products/search?q=" + searchTerm);
   };
+
   return (
     <>
+      {showLogin && (
+        <Modal close={() => setShowLogin(false)}>
+          <Login close={() => setShowLogin(false)} />
+        </Modal>
+      )}
       <header className={styles.headerWrapper}>
         <div className={`container ${styles.headerContent}`}>
           <Link to="/" className={styles.logo}>
@@ -56,10 +67,13 @@ const Header = () => {
                 <PiUserCircleGearThin className={styles.icon} />
               </Link>
             ) : (
-              <Link to="/login" className={styles.navLink}>
+              <button
+                className={styles.navLink}
+                onClick={() => setShowLogin(true)}
+              >
                 <PiUserCircleLight className={styles.icon} />
                 <span className={styles.navLinkText}>Login</span>
-              </Link>
+              </button>
             )}
             <div className={styles.moreMenu}>
               <button className={styles.navLink}>

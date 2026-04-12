@@ -1,18 +1,6 @@
 import { create } from "zustand";
-import axios from "axios";
-import { env } from "@/config/evn";
-
-type Role = "customer" | "admin" | "seller";
-export interface UserDocument {
-  // change the name of the interface to avoid confusion with the model change to IUser or
-  _id: string;
-  name: string;
-  gender: string;
-  phoneNumber: string;
-  email: string;
-
-  roles: Role[];
-}
+import authService from "@/services/auth.service";
+import type { UserDocument } from "@/types/userTypes";
 
 interface AuthState {
   user: UserDocument | null;
@@ -32,7 +20,7 @@ const useAuthStore = create<AuthState>((set) => ({
   checkAuth: async () => {
     try {
       set({ isLoading: true });
-      const response = await axios.get(`${env.VITE_API_URL}/api/auth/me`);
+      const response = await authService.checkAuth();
       set({ user: response.data, isAuthenticated: true, isLoading: false });
     } catch (error) {
       set({ isLoading: false });
@@ -42,10 +30,7 @@ const useAuthStore = create<AuthState>((set) => ({
   register: async (name: string, email: string, password: string) => {
     try {
       set({ isLoading: true });
-      const response = await axios.post(
-        `${env.VITE_API_URL}/api/auth/register`,
-        { name, email, password },
-      );
+      const response = await authService.register(name, email, password);
       set({ user: response.data, isAuthenticated: true, isLoading: false });
     } catch (error) {
       set({ isLoading: false });
@@ -55,11 +40,12 @@ const useAuthStore = create<AuthState>((set) => ({
   login: async (email: string, password: string) => {
     try {
       set({ isLoading: true });
-      const response = await axios.post(`${env.VITE_API_URL}/api/auth/login`, {
-        email,
-        password,
+      const response = await authService.login(email, password);
+      set({
+        user: response.data,
+        isAuthenticated: true,
+        isLoading: false,
       });
-      set({ user: response.data, isAuthenticated: true, isLoading: false });
     } catch (error) {
       set({ isLoading: false });
       console.log(error);
@@ -68,9 +54,7 @@ const useAuthStore = create<AuthState>((set) => ({
   upgradeToSeller: async () => {
     try {
       set({ isLoading: true });
-      const response = await axios.post(
-        `${env.VITE_API_URL}/api/auth/upgradeToSeller`,
-      );
+      const response = await authService.upgradeToSeller();
       set({ user: response.data, isAuthenticated: true, isLoading: false });
     } catch (error) {
       set({ isLoading: false });
@@ -80,7 +64,7 @@ const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     try {
       set({ isLoading: true });
-      const response = await axios.post(`${env.VITE_API_URL}/api/auth/logout`);
+      const response = await authService.logout();
       set({ user: response.data, isAuthenticated: false, isLoading: false });
     } catch (error) {
       set({ isLoading: false });

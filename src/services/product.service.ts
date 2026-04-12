@@ -1,5 +1,9 @@
 import api from "@/api/axios";
-import type { Product, ProductPromise } from "@/types/index";
+import type {
+  Product,
+  CategoryProductPromise,
+  ProductPromise,
+} from "@/types/index";
 
 export const getProducts = async (): Promise<Product[]> => {
   const response = await api.get(`/product`);
@@ -7,7 +11,7 @@ export const getProducts = async (): Promise<Product[]> => {
   return data;
 };
 
-export const getProduct = async (id: string): Promise<Product> => {
+export const getProduct = async (id: string): Promise<ProductPromise> => {
   const response = await api(`/product/${id}`);
   const data = response.data;
   return data;
@@ -17,7 +21,7 @@ export const getProductsByCategory = async (
   category: string,
   page: number,
   limit: number,
-): Promise<ProductPromise> => {
+): Promise<CategoryProductPromise> => {
   const response = await api.get(
     `/product/category/${category}?page=${page}&limit=${limit}`,
   );
@@ -27,8 +31,12 @@ export const getProductsByCategory = async (
 
 export const getSearchProducts = async (
   searchTerm: string,
-): Promise<Product[]> => {
-  const response = await api.get(`/product/search/${searchTerm}`);
+  page: number,
+  limit: number,
+): Promise<CategoryProductPromise> => {
+  const response = await api.get(
+    `/product/search?q=${searchTerm}&page=${page}&limit=${limit}`,
+  );
   const data = response.data;
   return data;
 };

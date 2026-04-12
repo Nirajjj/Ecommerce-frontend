@@ -17,7 +17,7 @@
   --accent-600: #ea580c; /* Main Action Color */
 
   /* Semantic Colors (System States) */
-  --success: #10b981; /* Green for "Order Placed", "In Stock" */
+  --success: Green; /* Green for "Order Placed", "In Stock" */
   --danger: #ef4444; /* Red for "Out of Stock", Errors */
   --warning: #f59e0b; /* Yellow for Ratings, Alerts */
   --info: #3b82f6; /* Blue for Tooltips, Info */

@@ -1,6 +1,9 @@
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { getProductsByCategory } from "@/services/product.service";
-import type { ProductPromise } from "@/types";
+import {
+  getProductsByCategory,
+  getSearchProducts,
+} from "@/services/product.service";
+import type { CategoryProductPromise } from "@/types";
 import { CATEGORIES } from "@/constants/categories";
 import { useMemo } from "react";
 
@@ -27,7 +30,7 @@ export const useHomeCategories = () => {
 
   const data = useMemo(
     () =>
-      categories.reduce<Record<string, ProductPromise | undefined>>(
+      categories.reduce<Record<string, CategoryProductPromise | undefined>>(
         (acc, category, index) => {
           acc[category.name] = queries[index]?.data;
           // 🔹 use name
@@ -60,11 +63,19 @@ export const useProductsByCategory = (
   category: string,
   page: number,
   limit: number,
+  searchTerm: string | null,
 ) => {
-  return useQuery<ProductPromise>({
-    queryKey: ["products", category, page, limit],
+  return useQuery<CategoryProductPromise>({
+    queryKey: ["products", category, page, limit, searchTerm],
 
-    queryFn: () => getProductsByCategory(category, page, limit),
+    queryFn: () => {
+      console.log("searchTerm", searchTerm);
+      if (searchTerm) {
+        return getSearchProducts(searchTerm, page, limit);
+      } else {
+        return getProductsByCategory(category, page, limit);
+      }
+    },
 
     enabled: !!category, // prevents query from running if category is undefined
   });

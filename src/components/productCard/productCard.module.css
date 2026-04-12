@@ -7,6 +7,7 @@
   transition: all 0.2s ease;
   border: 1px solid #eee;
   width: 200px;
+  height: 100%;
 }
 
 .card:hover {
