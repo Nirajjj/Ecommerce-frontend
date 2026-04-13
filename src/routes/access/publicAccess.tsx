@@ -7,15 +7,7 @@ const publicRoutes: RouteObject[] = [
   {
     path: "/",
     element: <RootLayout />,
-    children: [
-      { index: true, element: <Home /> },
-      ...productRoutes,
-      { path: "login", element: <h1>Login</h1> },
-      { path: "register", element: <h1>Register</h1> },
-      { path: "unauthorized", element: <h1>Unauthorized</h1> },
-      { path: "about", element: <h1>About</h1> },
-      { path: "contact", element: <h1>Contact</h1> },
-    ],
+    children: [{ index: true, element: <Home /> }, ...productRoutes],
   },
 ];
 
