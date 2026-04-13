@@ -3,7 +3,7 @@ import styles from "./categorySection.module.css";
 import { FiArrowRightCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 const CategorySection = ({ product }: { product: CategoryProductPromise }) => {
-  const { id, name } = product.data.categoryDetails!;
+  const { id, name } = product.data.categoryDetails;
   return (
     <div className={styles.container}>
       <Link to={`/products/${id}`}>

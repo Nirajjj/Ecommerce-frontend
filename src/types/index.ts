@@ -9,14 +9,17 @@ export interface Product {
   seller: string;
   images: { url: string; public_id: string }[];
 }
-
+export interface CategoryDetails {
+  id: string;
+  name: string;
+}
 export interface PaginatedData {
   page: number;
   limit: number;
   totalPages: number;
   totalProducts: number;
   products: Product[];
-  categoryDetails?: Record<string, string>;
+  categoryDetails: CategoryDetails;
 }
 export interface CategoryProductPromise {
   data: PaginatedData;
