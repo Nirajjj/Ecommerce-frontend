@@ -44,13 +44,13 @@ const Product = () => {
   if (!id) return toast.error("Product not found");
   if (isLoading) return <ProductPageSkeleton />;
   if (isError) return toast.error("Failed to load product");
-  console.log(data);
+
   const { name, description, price, stock, images, category } = data!.data;
 
   const discount = ((mrp - price) / mrp) * 100;
   const finalDiscount = discount.toFixed(2);
   mrp = mrp + price;
-  console.log("mrp", mrp);
+
   const handleAddToCart = () => {
     if (isInCart) {
       navigate("/cart");

@@ -3,24 +3,43 @@ import styles from "./Login.module.css";
 import { useState } from "react";
 interface LoginFormProps {
   close: () => void;
+  roles: string[];
 }
 
-const Login = ({ close }: LoginFormProps) => {
+const Login = ({ close, roles }: LoginFormProps) => {
   const login = useAuthStore((state) => state.login);
+  const register = useAuthStore((state) => state.register);
+  const [isLogin, setIsLogin] = useState(true);
   const isLoading = useAuthStore((state) => state.isLoading);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
     if (!email || !password) return;
-    await login(email, password);
-
+    if (isLogin) {
+      await login(email, password);
+    } else {
+      await register(name, email, password, roles);
+    }
     close();
   };
-
+  const handleAuthOption = () => {
+    setIsLogin(!isLogin);
+  };
   return (
     <div className={styles.loginContainer}>
       <h2>Login</h2>
-
+      {!isLogin && (
+        <input
+          placeholder="Name"
+          className={styles.input}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+          value={name}
+          required
+        />
+      )}
       <input
         placeholder="Email"
         className={styles.input}
@@ -42,8 +61,18 @@ const Login = ({ close }: LoginFormProps) => {
       />
 
       <button className={styles.button} onClick={handleLogin}>
-        {isLoading ? <div className={styles.spinner}></div> : "Login"}
+        {isLoading ? (
+          <div className={styles.spinner}></div>
+        ) : isLogin ? (
+          "Login"
+        ) : (
+          "Sign Up"
+        )}
       </button>
+      <p className={styles.authOption}>
+        Don't have an account?{" "}
+        <span onClick={handleAuthOption}>{isLogin ? "Sign Up" : "Login"}</span>
+      </p>
     </div>
   );
 };

@@ -5,6 +5,7 @@ export interface UserDocument {
   gender: "male" | "female" | "other";
   phoneNumber: string;
   email: string;
+  avatar: { url: string; public_id: string };
   roles: roles[];
   isActive: string;
 }

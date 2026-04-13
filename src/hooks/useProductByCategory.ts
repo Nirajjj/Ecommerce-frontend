@@ -69,7 +69,6 @@ export const useProductsByCategory = (
     queryKey: ["products", category, page, limit, searchTerm],
 
     queryFn: () => {
-      console.log("searchTerm", searchTerm);
       if (searchTerm) {
         return getSearchProducts(searchTerm, page, limit);
       } else {

@@ -37,7 +37,7 @@ const CategoryNav = () => {
     <nav className={styles.categoryNav}>
       {categories.map((category) => {
         const { name, id } = category.categoryDetails;
-        console.log(id, categoryId);
+
         const linkTo = id !== "/" ? `/products/${id}` : `/`;
         const isActive = (id === "/" && !categoryId) || categoryId === id;
         return (

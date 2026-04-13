@@ -3,7 +3,7 @@ import type { CartItem } from "@/types";
 
 export default function PriceDetails({ items }: { items: CartItem[] }) {
   //   const items = useCartStore((state) => state.cartItems);
-  console.log("items", items);
+
   const totalPrice = items.reduce(
     (acc, item) => acc + item.mrp * item.quantity,
     0,
@@ -14,7 +14,7 @@ export default function PriceDetails({ items }: { items: CartItem[] }) {
   );
 
   const totalAmount = totalPrice - discount + 199;
-  console.log("totalPrice", totalPrice);
+
   return (
     <div className={styles.priceDetails}>
       <h3>Price Details</h3>

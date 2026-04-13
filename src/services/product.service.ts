@@ -6,13 +6,13 @@ import type {
 } from "@/types/index";
 
 export const getProducts = async (): Promise<Product[]> => {
-  const response = await api.get(`/product`);
+  const response = await api.get(`/products`);
   const data = response.data;
   return data;
 };
 
 export const getProduct = async (id: string): Promise<ProductPromise> => {
-  const response = await api(`/product/${id}`);
+  const response = await api(`/products/${id}`);
   const data = response.data;
   return data;
 };
@@ -23,7 +23,7 @@ export const getProductsByCategory = async (
   limit: number,
 ): Promise<CategoryProductPromise> => {
   const response = await api.get(
-    `/product/category/${category}?page=${page}&limit=${limit}`,
+    `/products/category/${category}?page=${page}&limit=${limit}`,
   );
   const data = response.data;
   return data;
@@ -35,26 +35,26 @@ export const getSearchProducts = async (
   limit: number,
 ): Promise<CategoryProductPromise> => {
   const response = await api.get(
-    `/product/search?q=${searchTerm}&page=${page}&limit=${limit}`,
+    `/products/search?q=${searchTerm}&page=${page}&limit=${limit}`,
   );
   const data = response.data;
   return data;
 };
 
 export const addProduct = async (product: Product): Promise<Product> => {
-  const response = await api.post("/product", product);
+  const response = await api.post("/products", product);
   const data = response.data;
   return data;
 };
 
 export const updateProduct = async (product: Product): Promise<Product> => {
-  const response = await api.put(`/product/${product._id}`, product);
+  const response = await api.put(`/products/${product._id}`, product);
   const data = response.data;
   return data;
 };
 
 export const deleteProduct = async (id: string): Promise<Product> => {
-  const response = await api.delete(`/product/${id}`);
+  const response = await api.delete(`/products/${id}`);
   const data = response.data;
   return data;
 };

@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.card {
+  display: flex;
+  gap: 40px;
+  padding: 30px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.imageSection {
+  text-align: center;
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.uploadBtn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.info {
+  min-width: 300px;
+}
+
+.field {
+  margin-top: 15px;
+}
+
+.field span {
+  font-weight: 600;
+  color: gray;
+}

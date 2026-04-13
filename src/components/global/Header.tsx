@@ -13,27 +13,32 @@ import { FaStore } from "react-icons/fa";
 import { useState } from "react";
 import useCartStore from "@/store/useCartStore";
 import CategoryNav from "../categoryNav/CategoryNav";
-import Modal from "../Modal/modal";
+import Modal from "../Modal/Modal";
 import Login from "../Authentication/Login";
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showLogin, setShowLogin] = useState(false);
+  const [roles, setRoles] = useState(["customer"]);
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  console.log(user);
   const cartItems = useCartStore((state) => state.cartItems);
   const logout = useAuthStore((state) => state.logout);
   // const navigate = useNavigate();
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(searchTerm);
+
     navigate("/products/search?q=" + searchTerm);
   };
-
+  const handleSeller = () => {
+    setRoles(["customer", "seller"]);
+    setShowLogin(true);
+  };
   return (
     <>
       {showLogin && (
         <Modal close={() => setShowLogin(false)}>
-          <Login close={() => setShowLogin(false)} />
+          <Login close={() => setShowLogin(false)} roles={roles} />
         </Modal>
       )}
       <header className={styles.headerWrapper}>
@@ -87,7 +92,7 @@ const Header = () => {
                 <ul>
                   <li className={styles.dropdownList}>
                     <FaStore className={styles.icon} />
-                    <a href="/seller">Become a Seller</a>
+                    <a onClick={handleSeller}>Become a Seller</a>
                   </li>
                   {user && (
                     <li className={styles.dropdownList}>

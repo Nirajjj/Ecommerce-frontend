@@ -1,11 +1,11 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-
+axios.defaults.withCredentials = true;
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 api.interceptors.response.use(
   (response) => response,
@@ -27,7 +27,7 @@ api.interceptors.response.use(
     // Scenario B: Unauthorized (Token expired or invalid)
     if (error.response.status === 401) {
       localStorage.removeItem("accessToken");
-      window.location.href = "/login"; // Force redirect to login page immediately
+      // window.location.href = "/login"; // Force redirect to login page immediately
     }
 
     // Scenario C: Server Crashed

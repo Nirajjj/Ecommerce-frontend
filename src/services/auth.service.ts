@@ -18,8 +18,14 @@ const register = async (
   name: string,
   email: string,
   password: string,
+  roles: string[],
 ): Promise<UserDocumentPromise> => {
-  const response = await api.post("/auth/register", { name, email, password });
+  const response = await api.post("/auth/signup", {
+    name,
+    email,
+    password,
+    roles,
+  });
   return response.data;
 };
 

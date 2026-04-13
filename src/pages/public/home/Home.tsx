@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const Home = () => {
   const { data: products, isLoading, isError, errors } = useHomeCategories();
-  console.log(products);
+
   if (isLoading) return <div>Loading categories...</div>;
 
   if (isError || errors.length) {

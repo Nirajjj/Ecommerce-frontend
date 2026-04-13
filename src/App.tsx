@@ -5,11 +5,12 @@ import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const checkAuth = useAuthStore((state) => state.checkAuth);
+  // const checkAuth = useAuthStore((state) => state.checkAuth);
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    // checkAuth();
+    useAuthStore.getState().checkAuth();
+  }, []);
   return (
     <>
       <Toaster />
