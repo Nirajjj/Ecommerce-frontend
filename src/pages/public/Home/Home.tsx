@@ -1,5 +1,6 @@
 import CategorySection from "@/components/categorySection/CategorySection";
 import Hero from "@/components/hero/Hero";
+import HomePageShimmer from "@/components/skeleton/HomePageShimmer";
 import ErrorState from "@/components/states/ErrorState";
 import { useHomeCategories } from "@/hooks/useProductByCategory";
 import toast from "react-hot-toast";
@@ -7,7 +8,7 @@ import toast from "react-hot-toast";
 const Home = () => {
   const { data: products, isLoading, isError, errors } = useHomeCategories();
 
-  if (isLoading) return <div>Loading categories...</div>;
+  if (isLoading) return <HomePageShimmer />;
 
   if (isError || errors.length) {
     toast.error("Failed to load products");
