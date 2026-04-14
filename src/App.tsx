@@ -3,12 +3,14 @@ import appRouter from "./routes/router";
 import useAuthStore from "./store/useAuthStore";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { initAnalytics } from "./lib/analytics";
 
 function App() {
   // const checkAuth = useAuthStore((state) => state.checkAuth);
 
   useEffect(() => {
     // checkAuth();
+    initAnalytics();
     useAuthStore.getState().checkAuth();
   }, []);
   return (
