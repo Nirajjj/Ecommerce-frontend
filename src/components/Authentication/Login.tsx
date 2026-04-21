@@ -1,14 +1,17 @@
 import useAuthStore from "@/store/useAuthStore";
 import styles from "./Login.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 interface LoginFormProps {
   close: () => void;
   roles: string[];
+  navigateTo: string;
 }
 
-const Login = ({ close, roles }: LoginFormProps) => {
+const Login = ({ close, roles, navigateTo }: LoginFormProps) => {
   const login = useAuthStore((state) => state.login);
   const register = useAuthStore((state) => state.register);
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const isLoading = useAuthStore((state) => state.isLoading);
   const [name, setName] = useState("");
@@ -21,6 +24,8 @@ const Login = ({ close, roles }: LoginFormProps) => {
     } else {
       await register(name, email, password, roles);
     }
+    navigate(navigateTo);
+
     close();
   };
   const handleAuthOption = () => {
@@ -60,7 +65,7 @@ const Login = ({ close, roles }: LoginFormProps) => {
         required
       />
 
-      <button className={styles.button} onClick={handleLogin}>
+      <button type="button" className={styles.button} onClick={handleLogin}>
         {isLoading ? (
           <div className={styles.spinner}></div>
         ) : isLogin ? (

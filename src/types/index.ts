@@ -1,3 +1,7 @@
+export interface ProductImage {
+  url: string;
+  public_id: string;
+}
 export interface Product {
   _id: string;
   name: string;
@@ -7,8 +11,9 @@ export interface Product {
   stock: number;
   mrp: number;
   seller: string;
-  images: { url: string; public_id: string }[];
+  images: ProductImage[];
 }
+
 export interface CategoryDetails {
   id: string;
   name: string;
@@ -21,7 +26,7 @@ export interface PaginatedData {
   products: Product[];
   categoryDetails: CategoryDetails;
 }
-export interface CategoryProductPromise {
+export interface PaginatedProductPromise {
   data: PaginatedData;
   message: string;
   status: string;
@@ -51,6 +56,7 @@ export interface SingleProduct {
   price: number;
   category: category;
   stock: number;
+  mrp: number;
   seller: string;
   images: { url: string; public_id: string }[];
 }
@@ -81,7 +87,11 @@ export interface Category {
   name: string;
   description: string;
 }
-
+export interface CategoryPromise {
+  data: Category[];
+  message: string;
+  status: string;
+}
 export interface OrderItem {
   _id: string;
   product: string;

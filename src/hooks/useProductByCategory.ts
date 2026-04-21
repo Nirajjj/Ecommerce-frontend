@@ -3,7 +3,7 @@ import {
   getProductsByCategory,
   getSearchProducts,
 } from "@/services/product.service";
-import type { CategoryProductPromise } from "@/types";
+import type { PaginatedProductPromise } from "@/types";
 import { CATEGORIES } from "@/constants/categories";
 import { useMemo } from "react";
 
@@ -30,7 +30,7 @@ export const useHomeCategories = () => {
 
   const data = useMemo(
     () =>
-      categories.reduce<Record<string, CategoryProductPromise | undefined>>(
+      categories.reduce<Record<string, PaginatedProductPromise | undefined>>(
         (acc, category, index) => {
           acc[category.name] = queries[index]?.data;
           // 🔹 use name
@@ -65,7 +65,7 @@ export const useProductsByCategory = (
   limit: number,
   searchTerm: string | null,
 ) => {
-  return useQuery<CategoryProductPromise>({
+  return useQuery<PaginatedProductPromise>({
     queryKey: ["products", category, page, limit, searchTerm],
 
     queryFn: () => {

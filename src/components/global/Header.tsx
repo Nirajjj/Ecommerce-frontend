@@ -15,30 +15,61 @@ import useCartStore from "@/store/useCartStore";
 import CategoryNav from "../categoryNav/CategoryNav";
 import Modal from "../Modal/Modal";
 import Login from "../Authentication/Login";
+import authService from "@/services/auth.service";
+import { useLocation } from "react-router-dom";
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showLogin, setShowLogin] = useState(false);
   const [roles, setRoles] = useState(["customer"]);
+  const [navigateTo, setNavigateTo] = useState("/");
   const navigate = useNavigate();
+  const location = useLocation();
+  const isSellerPage = location.pathname.startsWith("/seller");
   const user = useAuthStore((state) => state.user);
   console.log(user);
   const cartItems = useCartStore((state) => state.cartItems);
+  const sellerText = !user?.roles.includes("seller")
+    ? "Become a Seller"
+    : isSellerPage
+      ? "Switch to Customer"
+      : "Switch to Seller";
   const logout = useAuthStore((state) => state.logout);
   // const navigate = useNavigate();
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     navigate("/products/search?q=" + searchTerm);
   };
-  const handleSeller = () => {
-    setRoles(["customer", "seller"]);
-    setShowLogin(true);
+  const handleSeller = async () => {
+    if (user && user.roles.includes("seller")) {
+      navigate("/seller/products");
+    } else if (user && !user.roles.includes("seller")) {
+      const confirm: boolean = window.confirm(
+        "Are you sure you want to upgrade to seller?",
+      );
+      if (confirm) {
+        await authService.upgradeToSeller();
+        navigate("/seller/products");
+      }
+    } else {
+      setRoles(["customer", "seller"]);
+      setNavigateTo("/seller/products");
+      setShowLogin(true);
+    }
   };
   return (
     <>
       {showLogin && (
         <Modal close={() => setShowLogin(false)}>
-          <Login close={() => setShowLogin(false)} roles={roles} />
+          <Login
+            close={() => setShowLogin(false)}
+            roles={roles}
+            navigateTo={navigateTo}
+          />
         </Modal>
       )}
       <header className={styles.headerWrapper}>
@@ -92,12 +123,12 @@ const Header = () => {
                 <ul>
                   <li className={styles.dropdownList}>
                     <FaStore className={styles.icon} />
-                    <a onClick={handleSeller}>Become a Seller</a>
+                    <a onClick={handleSeller}>{sellerText}</a>
                   </li>
                   {user && (
                     <li className={styles.dropdownList}>
                       <CiLogout className={styles.icon} />
-                      <button onClick={logout}>Logout</button>
+                      <button onClick={handleLogout}>Logout</button>
                     </li>
                   )}
                 </ul>
@@ -116,7 +147,7 @@ const Header = () => {
           </nav>
         </div>
       </header>
-      <CategoryNav />
+      {!isSellerPage && <CategoryNav />}
     </>
   );
 };

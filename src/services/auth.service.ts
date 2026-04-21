@@ -36,6 +36,7 @@ const upgradeToSeller = async (): Promise<UserDocumentPromise> => {
 
 const logout = async (): Promise<UserDocumentPromise> => {
   const response = await api.post("/auth/logout");
+
   return response.data;
 };
 
