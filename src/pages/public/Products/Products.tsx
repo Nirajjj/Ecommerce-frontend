@@ -4,13 +4,14 @@ import { useProductsByCategory } from "@/hooks/useProductByCategory";
 import styles from "./Products.module.css";
 import toast from "react-hot-toast";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCartSkeleton from "@/components/skeleton/ProductCardSkeleton";
+import Pagination from "@/components/global/Pagination/Pagination";
 const Products = ({ id }: { id: string }) => {
   const [page, setPage] = useState(1);
   const [searchParam] = useSearchParams();
   const searchTerm = searchParam.get("q");
-  const limit = 16;
+  const limit = 15;
   const { categoryId } = useParams();
 
   const { data, error, isLoading } = useProductsByCategory(
@@ -20,7 +21,9 @@ const Products = ({ id }: { id: string }) => {
     searchTerm,
   );
   const totalPages = data?.data.totalPages ?? 0;
-
+  useEffect(() => {
+    if (error) toast.error("Failed to load products");
+  }, [error]);
   if (isLoading) {
     return (
       <div className={styles.productsContainer}>
@@ -31,21 +34,6 @@ const Products = ({ id }: { id: string }) => {
     );
   }
 
-  if (error) {
-    toast.error("Failed to load products");
-  }
-  const handlePageChange = (pageNumber: number = 0) => {
-    if (pageNumber === 0) {
-      setPage((prev) => prev + 1);
-    } else {
-      setPage(pageNumber);
-    }
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <div>
       <div className={styles.productsContainer}>
@@ -55,29 +43,7 @@ const Products = ({ id }: { id: string }) => {
           </Link>
         ))}
       </div>
-      <div className={styles.pagination}>
-        {Array.from({ length: totalPages }).map((_, index) => {
-          const pageNumber = index + 1;
-          return (
-            <span
-              className={
-                page === pageNumber ? styles.activePage : styles.pageNumber
-              }
-              key={index}
-              onClick={() => handlePageChange(pageNumber)}
-            >
-              {pageNumber}
-            </span>
-          );
-        })}
-
-        <button
-          disabled={page === totalPages}
-          onClick={() => handlePageChange()}
-        >
-          Next
-        </button>
-      </div>
+      <Pagination totalPages={totalPages} page={page} setPage={setPage} />
     </div>
   );
 };

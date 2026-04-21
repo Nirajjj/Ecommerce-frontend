@@ -46,7 +46,11 @@ const Header = () => {
   };
   const handleSeller = async () => {
     if (user && user.roles.includes("seller")) {
-      navigate("/seller/products");
+      if (isSellerPage) {
+        navigate("/");
+      } else {
+        navigate("/seller/products");
+      }
     } else if (user && !user.roles.includes("seller")) {
       const confirm: boolean = window.confirm(
         "Are you sure you want to upgrade to seller?",

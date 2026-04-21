@@ -4,11 +4,13 @@ import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const { name, price, images } = product;
-  const [mrp] = useState(() => Math.floor(Math.random() * 900) + 100 + price);
+  const { name, price, images, mrp } = product;
+  const [modMrp] = useState(
+    () => Math.floor(Math.random() * 900) + 100 + price,
+  );
   const [rating] = useState(() => Number((Math.random() * 5).toFixed(1)));
 
-  const discount = ((mrp - price) / mrp) * 100;
+  const discount = ((mrp || modMrp - price) / mrp || modMrp) * 100;
   const finalDiscount = discount.toFixed(2);
   const [reviewsCount] = useState(() => Math.floor(Math.random() * 10000) + 1);
   return (
@@ -28,7 +30,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 
       <div className={styles.priceSection}>
         <span className={styles.price}>₹{price}</span>
-        <span className={styles.mrp}>₹{mrp}</span>
+        <span className={styles.mrp}>₹{mrp || modMrp}</span>
         <span className={styles.discount}>{finalDiscount}% off</span>
       </div>
     </div>

@@ -38,18 +38,18 @@ const Product = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  let [mrp] = useState(() => Math.floor(Math.random() * 900) + 100);
+  let [modMrp] = useState(() => Math.floor(Math.random() * 900) + 100);
   const [rating] = useState(() => Number((Math.random() * 5).toFixed(1)));
   const [reviewsCount] = useState(() => Math.floor(Math.random() * 10000) + 1);
   if (!id) return toast.error("Product not found");
   if (isLoading) return <ProductPageSkeleton />;
   if (isError) return toast.error("Failed to load product");
 
-  const { name, description, price, stock, images, category } = data!.data;
-
+  const { name, description, price, stock, images, mrp, category } = data!.data;
+  console.log("data", data);
   const discount = ((mrp - price) / mrp) * 100;
   const finalDiscount = discount.toFixed(2);
-  mrp = mrp + price;
+  modMrp = mrp + price;
 
   const handleAddToCart = () => {
     if (isInCart) {
@@ -87,11 +87,23 @@ const Product = () => {
               ))}
             </Swiper>
           ) : (
-            images.map((image) => (
-              <div key={image.public_id} className={styles.imageWrapper}>
-                <img src={image.url} alt={name} />
+            <div className={styles.imageContainer}>
+              <div className={styles.row2}>
+                {images.slice(0, 2).map((image) => (
+                  <div key={image.public_id} className={styles.imageWrapper}>
+                    <img src={image.url} alt={name} />
+                  </div>
+                ))}
               </div>
-            ))
+
+              <div className={styles.row3}>
+                {images.slice(2, 5).map((image) => (
+                  <div key={image.public_id} className={styles.imageWrapper}>
+                    <img src={image.url} alt={name} />
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
         <div className={styles.detailsContainer}>
@@ -106,7 +118,7 @@ const Product = () => {
           </div>
           <div className={styles.priceSection}>
             <span className={styles.discount}>{finalDiscount}% off</span>
-            <span className={styles.oldPrice}>₹{mrp}</span>
+            <span className={styles.oldPrice}>₹{mrp || modMrp}</span>
             <span className={styles.price}>₹{price}</span>
           </div>
 

@@ -5,6 +5,7 @@
   border-top: 2px solid transparent;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
+  margin: 0 auto;
 }
 @keyframes spin {
   to {

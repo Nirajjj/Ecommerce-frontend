@@ -1,72 +1,33 @@
-.productsContainer {
+/* .productsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, 200px);
   gap: 1rem;
   margin-bottom: 1rem;
   justify-content: space-around;
-}
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+} */
+
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 200px); /* fixed 4 cols on desktop */
   gap: 1rem;
-  margin-top: 2rem;
+  margin-bottom: 1rem;
+  justify-content: space-around; /* center the whole grid, not stretch cards */
 }
 
-.pagination button {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  font-weight: 600;
-  color: var(--primary-600);
-  cursor: pointer;
-}
-
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.pageNumber {
-  padding: 0.3rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid var(--primary-600);
-  border-radius: 50%;
-  font-weight: 600;
-  color: var(--primary-600);
-  cursor: pointer;
-}
-
-.activePage {
-  padding: 0.3rem 0.8rem;
-  border-radius: 6px;
-  border: 1px solid var(--primary-600);
-  border-radius: 50%;
-  font-weight: 600;
-
-  cursor: pointer;
-  background-color: var(--primary-600);
-  color: white;
-}
-/* @media (max-width: 480px) {
+@media (max-width: 1024px) {
   .productsContainer {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
+    grid-template-columns: repeat(3, 200px);
   }
 }
+
 @media (max-width: 768px) {
   .productsContainer {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
+    grid-template-columns: repeat(2, 200px);
   }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 480px) {
   .productsContainer {
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* fluid on very small screens */
   }
-} */
+}

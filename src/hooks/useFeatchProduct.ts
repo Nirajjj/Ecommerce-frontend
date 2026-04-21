@@ -10,9 +10,9 @@ export const useFetchProduct = (id: string | undefined) => {
   });
 };
 
-export const useFetchSellerProducts = () => {
+export const useFetchSellerProducts = (page: number, limit: number) => {
   return useQuery<PaginatedProductPromise>({
-    queryKey: ["sellerProducts"],
-    queryFn: () => getSellerProducts(1, 10),
+    queryKey: ["sellerProducts", page, limit],
+    queryFn: () => getSellerProducts(page, limit),
   });
 };

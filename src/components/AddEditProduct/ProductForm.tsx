@@ -5,6 +5,7 @@ import { addProduct, updateProduct } from "@/services/product.service";
 import useAuthStore from "@/store/useAuthStore";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import ButtonSpinner from "../global/Loader/ButtonSpinner";
 
 type ImageSlot =
   | { kind: "existing"; url: string; public_id: string }
@@ -45,6 +46,7 @@ const ProductForm = ({
     buildSlots(product?.images),
   );
   const userId = useAuthStore((state) => state.user?._id);
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<Product>({
     _id: product?._id ?? "",
     name: product?.name ?? "",
@@ -122,17 +124,29 @@ const ProductForm = ({
     formData.append("images", JSON.stringify(existingImages));
 
     try {
+      let response;
       if (productId) {
-        await updateProduct(formData, productId);
-        toast.success("Product updated successfully");
+        setLoading(true);
+        response = await updateProduct(formData, productId);
+
+        if (response.status === "success") {
+          setLoading(false);
+          toast.success("Product updated successfully");
+          queryClient.invalidateQueries({ queryKey: ["sellerProducts"] });
+        }
       } else {
-        await addProduct(formData);
-        toast.success("Product created successfully");
-        console.log("Creating:", formData);
+        setLoading(true);
+        response = await addProduct(formData);
+        if (response.status === "success") {
+          setLoading(false);
+          toast.success("Product created successfully");
+          queryClient.invalidateQueries({ queryKey: ["sellerProducts"] });
+        }
       }
-      queryClient.invalidateQueries({ queryKey: ["sellerProducts"] });
+
       close();
     } catch (error) {
+      setLoading(false);
       toast.error("Failed to save product");
       console.log(error);
     }
@@ -241,7 +255,13 @@ const ProductForm = ({
         </select>
 
         <button className={styles.submitBtn} onClick={handleSubmit}>
-          {productId ? "Update Product" : "Add Product"}
+          {loading ? (
+            <ButtonSpinner />
+          ) : productId ? (
+            "Update Product"
+          ) : (
+            "Add Product"
+          )}
         </button>
       </div>
     </div>
