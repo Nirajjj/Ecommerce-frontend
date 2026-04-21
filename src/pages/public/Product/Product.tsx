@@ -46,7 +46,6 @@ const Product = () => {
   if (isError) return toast.error("Failed to load product");
 
   const { name, description, price, stock, images, mrp, category } = data!.data;
-  console.log("data", data);
   const discount = ((mrp - price) / mrp) * 100;
   const finalDiscount = discount.toFixed(2);
   modMrp = mrp + price;

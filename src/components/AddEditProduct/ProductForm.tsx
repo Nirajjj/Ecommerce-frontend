@@ -40,7 +40,6 @@ const ProductForm = ({
   categories: Category[];
   close: () => void;
 }) => {
-  console.log(product);
   const queryClient = useQueryClient();
   const [slots, setSlots] = useState<ImageSlot[]>(() =>
     buildSlots(product?.images),
@@ -140,7 +139,9 @@ const ProductForm = ({
         if (response.status === "success") {
           setLoading(false);
           toast.success("Product created successfully");
-          queryClient.invalidateQueries({ queryKey: ["sellerProducts"] });
+          queryClient.invalidateQueries({
+            queryKey: ["sellerProducts", product, productId],
+          });
         }
       }
 

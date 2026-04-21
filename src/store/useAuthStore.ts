@@ -32,10 +32,8 @@ const useAuthStore = create<AuthState>()(
       checkAuth: async () => {
         try {
           set({ isLoading: true });
-          console.log("checkAuth");
 
           const response = await authService.checkAuth();
-          console.log("response", response);
           set({ user: response.data, isAuthenticated: true, isLoading: false });
           toast.success("Welcome to VEXORA");
         } catch (error) {
