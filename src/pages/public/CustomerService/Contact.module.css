@@ -1,0 +1,86 @@
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+/* LEFT */
+.info {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.info h2 {
+  margin-bottom: 10px;
+}
+
+.detail {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.detail a:hover {
+  text-decoration: underline;
+}
+
+/* RIGHT */
+.form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form input,
+.form textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.form textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+.form button {
+  padding: 12px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}

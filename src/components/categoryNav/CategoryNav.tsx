@@ -41,7 +41,7 @@ const CategoryNav = () => {
         const linkTo = id !== "/" ? `/products/${id}` : `/`;
         const isActive = (id === "/" && !categoryId) || categoryId === id;
         return (
-          <Link to={linkTo}>
+          <Link to={linkTo} key={id}>
             <div
               key={category.categoryDetails.id}
               className={`${styles.navLink} ${isActive ? styles.selected : ""}`}

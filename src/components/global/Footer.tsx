@@ -27,24 +27,21 @@ const Footer = () => {
           <h3>Customer Service</h3>
           <Link to="/contact">Contact Us</Link>
           <Link to="/faq">FAQs</Link>
-          <Link to="/shipping">Shipping Info</Link>
-          <Link to="/returns">Returns</Link>
         </div>
 
         {/* Company */}
         <div className={styles.section}>
           <h3>Company</h3>
           <Link to="/about">About Us</Link>
-          <Link to="/careers">Careers</Link>
-          <Link to="/blog">Blog</Link>
         </div>
 
         {/* Legal */}
         <div className={styles.section}>
           <h3>Legal</h3>
-          <Link to="/privacy">Privacy Policy</Link>
-          <Link to="/terms">Terms</Link>
-          <Link to="/refund">Refund Policy</Link>
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <Link to="/terms-and-conditions">Terms and Conditions</Link>
+          <Link to="/refund-policy">Refund & Cancellation Policy</Link>
+          <Link to="/shipping-policy">Shipping Policy</Link>
         </div>
 
         {/* Newsletter */}

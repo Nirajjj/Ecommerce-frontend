@@ -1,7 +1,8 @@
+import Checkout from "@/pages/Checkout/Checkout";
 import type { RouteObject } from "react-router-dom";
 
 const checkoutRoutes: RouteObject[] = [
-  { path: "checkout", element: <h1>Checkout</h1> },
+  { path: "checkout", element: <Checkout /> },
   { path: "payment", element: <h1>Payment</h1> },
 ];
 

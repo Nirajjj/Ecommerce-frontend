@@ -25,7 +25,6 @@ export default function ProductTable({ data }: { data: Product[] }) {
       setDeletingId(id);
       deleteProduct(id);
     }
-    console.log(id);
   };
   const columns = useMemo(
     () => [

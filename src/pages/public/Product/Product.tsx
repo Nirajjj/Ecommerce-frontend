@@ -18,12 +18,18 @@ import { Navigation } from "swiper/modules";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useCartStore from "@/store/useCartStore";
+import useAuthStore from "@/store/useAuthStore";
+import LoginModal from "@/components/Authentication/LoginModal";
 
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+  // const [roles, setRoles] = useState(["customer"]);
+
   const addItem = useCartStore((state) => state.addItem);
   const cartItems = useCartStore((state) => state.cartItems);
+  const user = useAuthStore((state) => state.user);
   const isInCart = cartItems.some((item) => item._id === id);
   const { data, isLoading, isError } = useFetchProduct(id ?? "");
 
@@ -38,7 +44,7 @@ const Product = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  let [modMrp] = useState(() => Math.floor(Math.random() * 900) + 100);
+  // let [modMrp] = useState(() => Math.floor(Math.random() * 900) + 100);
   const [rating] = useState(() => Number((Math.random() * 5).toFixed(1)));
   const [reviewsCount] = useState(() => Math.floor(Math.random() * 10000) + 1);
   if (!id) return toast.error("Product not found");
@@ -46,9 +52,12 @@ const Product = () => {
   if (isError) return toast.error("Failed to load product");
 
   const { name, description, price, stock, images, mrp, category } = data!.data;
-  const discount = ((mrp - price) / mrp) * 100;
-  const finalDiscount = discount.toFixed(2);
-  modMrp = mrp + price;
+  const displayMrp = mrp ?? Math.round(price * 1.3);
+  const discount = Math.max(0, ((displayMrp - price) / displayMrp) * 100);
+  // const mrpToUse = mrp || modMrp;
+  // const discount = ((mrpToUse - price) / mrpToUse) * 100;
+  const finalDiscount = Number(discount.toFixed(2));
+  // modMrp = mrpToUse + price;
 
   const handleAddToCart = () => {
     if (isInCart) {
@@ -65,8 +74,24 @@ const Product = () => {
       });
     }
   };
+  const handleBuy = () => {
+    if (!user?._id) {
+      setShowLogin(true);
+    }
+    navigate("/user/checkout", {
+      state: { product: { ...data!.data, displayMrp, finalDiscount } },
+    });
+  };
+
   return (
     <>
+      {showLogin && (
+        <LoginModal
+          setShowLogin={setShowLogin}
+          roles={["customer"]}
+          navigateTo={"/user/checkout"}
+        />
+      )}
       <div className={styles.productContainer}>
         <div className={styles.imageContainer}>
           {isMobile ? (
@@ -117,7 +142,7 @@ const Product = () => {
           </div>
           <div className={styles.priceSection}>
             <span className={styles.discount}>{finalDiscount}% off</span>
-            <span className={styles.oldPrice}>₹{mrp || modMrp}</span>
+            <span className={styles.oldPrice}>₹{displayMrp}</span>
             <span className={styles.price}>₹{price}</span>
           </div>
 
@@ -147,7 +172,9 @@ const Product = () => {
 
               <CiShoppingCart className={styles.icon} size={30} />
             </button>
-            <button className={styles.buyBtn}>Buy at ₹{price}</button>
+            <button className={styles.buyBtn} onClick={handleBuy}>
+              Buy at ₹{price}
+            </button>
           </div>
         </div>
       </div>

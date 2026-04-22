@@ -49,6 +49,8 @@ export interface category {
   name: string;
   description: string;
 }
+
+// category is populated in this interface whereas in the product interface it is not
 export interface SingleProduct {
   _id: string;
   name: string;

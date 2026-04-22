@@ -19,7 +19,7 @@ const AddEditProduct = ({
     isLoading: isCategoriesLoading,
     isError: isCategoriesError,
   } = useFetchCategories();
-  // console.log(categories);
+
   useEffect(() => {
     if (isError) toast.error("Failed to load product");
   }, [isError]);

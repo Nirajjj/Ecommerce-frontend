@@ -1,0 +1,70 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* TITLE */
+.title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.date {
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+/* SECTIONS */
+.section {
+  margin-bottom: 25px;
+}
+
+.section h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.section p {
+  color: #444;
+  margin-bottom: 8px;
+}
+
+/* LIST */
+ul {
+  padding-left: 18px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+/* CONTACT BOX */
+.contact {
+  text-align: center;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.contact a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* DESKTOP */
+@media (min-width: 768px) {
+  .title {
+    font-size: 34px;
+  }
+
+  .section h2 {
+    font-size: 20px;
+  }
+}

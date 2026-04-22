@@ -191,11 +191,16 @@ button {
   background: none;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
+/* Reset anchor default styles globally */
 
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none !important;
+  color: inherit !important;
+}
 ul,
 ol {
   list-style: none;

@@ -59,7 +59,6 @@
 }
 
 .priceSection {
-  margin-top: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -73,28 +72,13 @@
 .mrp {
   text-decoration: line-through;
   color: #888;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .discount {
   color: #388e3c;
-  font-size: 13px;
+  font-size: 1rem;
   font-weight: 500;
-}
-
-.wishlist {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #bbb;
-}
-
-.wishlist:hover {
-  color: red;
 }
 
 .sponsored {

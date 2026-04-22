@@ -13,20 +13,18 @@ import { FaStore } from "react-icons/fa";
 import { useState } from "react";
 import useCartStore from "@/store/useCartStore";
 import CategoryNav from "../categoryNav/CategoryNav";
-import Modal from "../Modal/Modal";
-import Login from "../Authentication/Login";
 import authService from "@/services/auth.service";
 import { useLocation } from "react-router-dom";
+import LoginModal from "../Authentication/LoginModal";
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState<boolean>(false);
   const [roles, setRoles] = useState(["customer"]);
   const [navigateTo, setNavigateTo] = useState("/");
   const navigate = useNavigate();
   const location = useLocation();
   const isSellerPage = location.pathname.startsWith("/seller");
   const user = useAuthStore((state) => state.user);
-  console.log(user);
   const cartItems = useCartStore((state) => state.cartItems);
   const sellerText = !user?.roles.includes("seller")
     ? "Become a Seller"
@@ -68,13 +66,11 @@ const Header = () => {
   return (
     <>
       {showLogin && (
-        <Modal close={() => setShowLogin(false)}>
-          <Login
-            close={() => setShowLogin(false)}
-            roles={roles}
-            navigateTo={navigateTo}
-          />
-        </Modal>
+        <LoginModal
+          setShowLogin={setShowLogin}
+          roles={roles}
+          navigateTo={navigateTo}
+        />
       )}
       <header className={styles.headerWrapper}>
         <div className={`container ${styles.headerContent}`}>

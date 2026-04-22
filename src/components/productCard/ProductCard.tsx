@@ -5,14 +5,14 @@ import { useState } from "react";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { name, price, images, mrp } = product;
-  const [modMrp] = useState(
-    () => Math.floor(Math.random() * 900) + 100 + price,
-  );
   const [rating] = useState(() => Number((Math.random() * 5).toFixed(1)));
 
-  const discount = ((mrp || modMrp - price) / mrp || modMrp) * 100;
-  const finalDiscount = discount.toFixed(2);
   const [reviewsCount] = useState(() => Math.floor(Math.random() * 10000) + 1);
+
+  const displayMrp = mrp ?? Math.round(price * 1.3);
+  const discount = Math.max(0, ((displayMrp - price) / displayMrp) * 100);
+
+  const finalDiscount = Number(discount.toFixed(2));
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
@@ -21,17 +21,17 @@ const ProductCard = ({ product }: { product: Product }) => {
 
       <h3 className={styles.title}>{name}</h3>
 
+      <span className={styles.discount}>{finalDiscount}% OFF</span>
+
+      <div className={styles.priceSection}>
+        <span className={styles.mrp}>₹{displayMrp}</span>
+        <span className={styles.price}>₹{price}</span>
+      </div>
       <div className={styles.rating}>
         <span className={styles.ratingBox}>
           {rating} <FaStar />
         </span>
         <span className={styles.reviewCount}>({reviewsCount})</span>
-      </div>
-
-      <div className={styles.priceSection}>
-        <span className={styles.price}>₹{price}</span>
-        <span className={styles.mrp}>₹{mrp || modMrp}</span>
-        <span className={styles.discount}>{finalDiscount}% off</span>
       </div>
     </div>
   );
