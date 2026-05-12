@@ -7,7 +7,7 @@ import {
   CiSearch,
   CiShoppingCart,
 } from "react-icons/ci";
-import { PiUserCircleGearThin, PiUserCircleLight } from "react-icons/pi";
+import { PiUserCircleLight } from "react-icons/pi";
 import { SlArrowDown } from "react-icons/sl";
 import { FaStore } from "react-icons/fa";
 import { useState } from "react";
@@ -100,7 +100,12 @@ const Header = () => {
           <nav className={styles.nav}>
             {user ? (
               <Link to="/user/profile" className={styles.navLink}>
-                <PiUserCircleGearThin className={styles.icon} />
+                {/* <PiUserCircleGearThin className={styles.icon} /> */}
+                <img
+                  src={user.avatar.url}
+                  alt="profile"
+                  className={styles.profileAvatar}
+                />
               </Link>
             ) : (
               <button

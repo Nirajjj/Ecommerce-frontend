@@ -2,10 +2,12 @@ import { useRef } from "react";
 import useAuthStore from "@/store/useAuthStore";
 import styles from "./Profile.module.css";
 import toast from "react-hot-toast";
+import ButtonSpinner from "@/components/global/Loader/ButtonSpinner";
 
 const Profile = () => {
   const user = useAuthStore((state) => state.user);
   const updateProfileImage = useAuthStore((state) => state.updateProfileImage);
+  const isUpdatingImage = useAuthStore((state) => state.isUpdatingImage);
 
   // const [preview, setPreview] = useState<string | null>(
   //   user?.avatar?.url || "https://res.cloudinary.com/dbozdghfi/image/upload/v1776072179/default_avatar_pmp8qj.jpg",
@@ -47,7 +49,7 @@ const Profile = () => {
           />
 
           <button onClick={handleImageClick} className={styles.uploadBtn}>
-            Change Photo
+            {isUpdatingImage ? <ButtonSpinner /> : "Change Photo"}
           </button>
 
           <input

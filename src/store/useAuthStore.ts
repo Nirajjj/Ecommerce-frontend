@@ -5,10 +5,10 @@ import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 import userService from "@/services/user.service";
 import { persist } from "zustand/middleware";
-
 interface AuthState {
   user: UserDocument | null;
   isLoading: boolean;
+  isUpdatingImage: boolean;
   isAuthenticated: boolean;
   checkAuth: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
@@ -28,6 +28,7 @@ const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       isLoading: false,
+      isUpdatingImage: false,
       isAuthenticated: false,
       checkAuth: async () => {
         try {
@@ -111,8 +112,8 @@ const useAuthStore = create<AuthState>()(
         }
       },
       updateProfileImage: async (file: File) => {
+        set({ isUpdatingImage: true });
         try {
-          set({ isLoading: true });
           const response = await userService.updateProfileImage(file);
           set({ user: response.data, isAuthenticated: true, isLoading: false });
           toast.success("Profile image updated successfully");
@@ -122,7 +123,8 @@ const useAuthStore = create<AuthState>()(
           toast.error(
             err.response?.data?.message || "update profile image failed",
           );
-          set({ isLoading: false });
+        } finally {
+          set({ isUpdatingImage: false });
         }
       },
     }),

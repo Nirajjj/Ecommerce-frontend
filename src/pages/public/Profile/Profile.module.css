@@ -27,8 +27,12 @@
 
 .uploadBtn {
   margin-top: 10px;
-  padding: 6px 12px;
+  width: 8rem;
+  padding: 6px 0;
   cursor: pointer;
+  background-color: var(--primary-600);
+  color: var(--bg-surface);
+  border-radius: 6px;
 }
 
 .info {

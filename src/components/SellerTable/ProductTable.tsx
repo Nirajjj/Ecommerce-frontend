@@ -121,7 +121,12 @@ export default function ProductTable({ data }: { data: Product[] }) {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className={styles.row}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className={styles.td}>
+                  <td
+                    key={cell.id}
+                    className={styles.td}
+                    // Add this attribute to pass the header text to CSS
+                    data-label={cell.column.columnDef.header as string}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

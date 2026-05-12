@@ -97,3 +97,59 @@ button:hover {
   border-radius: 6px;
   border: 1px solid #ddd;
 }
+
+/* Responsive Card Layout for Mobile */
+@media screen and (max-width: 768px) {
+  /* Force table elements to not behave like tables */
+  .table,
+  .table thead,
+  .table tbody,
+  .th,
+  .td,
+  .row {
+    display: block;
+    width: 100%;
+  }
+
+  /* Hide the table headers completely */
+  .table thead {
+    display: none;
+  }
+
+  /* Style each row as an individual card */
+  .row {
+    margin-bottom: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Layout each cell to show label on left, data on right */
+  .td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    text-align: right; /* Aligns dynamic data to the right */
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .td:last-child {
+    border-bottom: none;
+  }
+
+  /* Inject the column header name before the cell content */
+  .td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #4b5563;
+    text-align: left;
+    margin-right: 16px;
+  }
+
+  /* Fix action buttons alignment on mobile */
+  .actions {
+    justify-content: flex-end;
+  }
+}
