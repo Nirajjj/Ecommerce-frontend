@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 
 export default function SellerLayout() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="container">
       <Header />
-      <main className="container">
+      <main>
         <Outlet />
       </main>
     </div>

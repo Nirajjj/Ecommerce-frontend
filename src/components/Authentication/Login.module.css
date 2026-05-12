@@ -1,10 +1,39 @@
 .loginContainer {
+  width: 60vw;
+  height: 80vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
+
+  overflow: hidden;
 }
 
+.imageContainer {
+  flex: 0.7;
+
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.formContainer {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 3rem;
+  gap: 1rem;
+}
 .button {
   padding: 0.5rem 1rem;
   border: 1px solid var(--primary-600);
@@ -46,5 +75,24 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .loginContainer {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow: hidden;
+  }
+  .imageContainer {
+    display: none;
+  }
+  .formContainer {
+    padding: 0;
+    gap: 0.5rem;
   }
 }

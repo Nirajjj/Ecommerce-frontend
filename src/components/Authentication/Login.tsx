@@ -33,51 +33,62 @@ const Login = ({ close, roles, navigateTo }: LoginFormProps) => {
   };
   return (
     <div className={styles.loginContainer}>
-      <h2>Login</h2>
-      {!isLogin && (
+      <div className={styles.imageContainer}>
+        <img
+          src="https://res.cloudinary.com/dbozdghfi/image/upload/v1778572607/ChatGPT_Image_May_12_2026_12_37_07_PM_atgtgi.png"
+          alt=""
+        />
+      </div>
+
+      <div className={styles.formContainer}>
+        <h2>Login</h2>
+        {!isLogin && (
+          <input
+            placeholder="Name"
+            className={styles.input}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            value={name}
+            required
+          />
+        )}
         <input
-          placeholder="Name"
+          placeholder="Email"
           className={styles.input}
           onChange={(e) => {
-            setName(e.target.value);
+            setEmail(e.target.value);
           }}
-          value={name}
+          value={email}
           required
         />
-      )}
-      <input
-        placeholder="Email"
-        className={styles.input}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-        value={email}
-        required
-      />
-      <input
-        placeholder="Password"
-        type="password"
-        className={styles.input}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-        value={password}
-        required
-      />
+        <input
+          placeholder="Password"
+          type="password"
+          className={styles.input}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          value={password}
+          required
+        />
 
-      <button type="button" className={styles.button} onClick={handleLogin}>
-        {isLoading ? (
-          <div className={styles.spinner}></div>
-        ) : isLogin ? (
-          "Login"
-        ) : (
-          "Sign Up"
-        )}
-      </button>
-      <p className={styles.authOption}>
-        Don't have an account?{" "}
-        <span onClick={handleAuthOption}>{isLogin ? "Sign Up" : "Login"}</span>
-      </p>
+        <button type="button" className={styles.button} onClick={handleLogin}>
+          {isLoading ? (
+            <div className={styles.spinner}></div>
+          ) : isLogin ? (
+            "Login"
+          ) : (
+            "Sign Up"
+          )}
+        </button>
+        <p className={styles.authOption}>
+          Don't have an account?{" "}
+          <span onClick={handleAuthOption}>
+            {isLogin ? "Sign Up" : "Login"}
+          </span>
+        </p>
+      </div>
     </div>
   );
 };
