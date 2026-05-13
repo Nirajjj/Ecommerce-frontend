@@ -5,6 +5,7 @@ import type { RazorpayOptions, RazorpayResponse } from "@/types/razorpay";
 import type { SingleProduct } from "@/types";
 import { createOrder, verifyPayment } from "@/services/order.service";
 import { env } from "@/config/evn";
+import useCartStore from "@/store/useCartStore";
 
 interface CheckoutProduct extends SingleProduct {
   displayMrp: number;
@@ -12,13 +13,12 @@ interface CheckoutProduct extends SingleProduct {
 }
 const Checkout = () => {
   const location = useLocation();
-  const product: CheckoutProduct = location.state?.product;
-  console.log(product);
+  const buyItem = useCartStore((state) => state.buyItem);
+  const product: CheckoutProduct = location.state?.product || buyItem;
+
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    console.log("Checkout mounted");
-  }, []);
+  useEffect(() => {}, []);
   if (!product) {
     console.warn("No product found in location state");
   }
@@ -51,7 +51,7 @@ const Checkout = () => {
         productId: product._id,
         quantity: 1,
       });
-      console.log("handlePayment", res);
+
       // 2️⃣ Open Razorpay
       const options: RazorpayOptions = {
         key: env.VITE_RAZORPAY_KEY,
@@ -70,7 +70,7 @@ const Checkout = () => {
           const verifyRes = await verifyPayment(data);
           if (verifyRes.status === "success") {
             alert("Payment Successful");
-            console.log(response);
+
             // Optional: verify payment on backend
           } else {
             alert("Payment Failed");

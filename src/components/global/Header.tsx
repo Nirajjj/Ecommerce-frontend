@@ -65,13 +65,13 @@ const Header = () => {
   };
   return (
     <>
-      {showLogin && (
-        <LoginModal
-          setShowLogin={setShowLogin}
-          roles={roles}
-          navigateTo={navigateTo}
-        />
-      )}
+      <LoginModal
+        showLogin={showLogin}
+        setShowLogin={setShowLogin}
+        roles={roles}
+        navigateTo={navigateTo}
+      />
+
       <header className={styles.headerWrapper}>
         <div className={`container ${styles.headerContent}`}>
           <Link to="/" className={styles.logo}>
@@ -102,7 +102,10 @@ const Header = () => {
               <Link to="/user/profile" className={styles.navLink}>
                 {/* <PiUserCircleGearThin className={styles.icon} /> */}
                 <img
-                  src={user.avatar.url}
+                  src={
+                    user.avatar?.url ||
+                    "https://res.cloudinary.com/dbozdghfi/image/upload/v1778694545/default_avatar_uloo0p.png"
+                  }
                   alt="profile"
                   className={styles.profileAvatar}
                 />

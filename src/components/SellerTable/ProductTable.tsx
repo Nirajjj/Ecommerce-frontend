@@ -9,13 +9,12 @@ import ButtonSpinner from "../global/Loader/ButtonSpinner";
 import AddEditProduct from "../AddEditProduct/AddEditProduct";
 import Modal from "../Modal/Modal";
 export default function ProductTable({ data }: { data: Product[] }) {
-  const { mutate: deleteProduct, isPending, isError } = useDeleteProduct();
+  const { mutate: deleteProduct, isPending } = useDeleteProduct();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null,
   );
-  console.log(isPending, isError);
 
   const handleDelete = (id: string) => {
     const confirm: boolean = window.confirm(

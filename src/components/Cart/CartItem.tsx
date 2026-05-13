@@ -1,6 +1,7 @@
 import styles from "@/pages/public/Cart/Cart.module.css";
 import useCartStore from "@/store/useCartStore";
 import type { CartItem } from "@/types";
+import { Link } from "react-router-dom";
 
 // interface CartItemProps {
 //   item: {
@@ -26,10 +27,14 @@ export default function CartItem({ item }: { item: CartItem }) {
   };
   return (
     <div className={styles.cartItem}>
-      <img src={item.images[0].url} className={styles.productImage} />
+      <Link to={`/product/${item._id}`}>
+        <img src={item.images[0].url} className={styles.productImage} />
+      </Link>
 
       <div className={styles.productInfo}>
-        <h4>{item.name}</h4>
+        <Link to={`/product/${item._id}`}>
+          <h4>{item.name}</h4>
+        </Link>
 
         <div className={styles.priceRow}>
           <span className={styles.discount}>50 %</span>

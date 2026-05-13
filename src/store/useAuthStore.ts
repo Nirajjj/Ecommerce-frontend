@@ -37,10 +37,8 @@ const useAuthStore = create<AuthState>()(
           const response = await authService.checkAuth();
           set({ user: response.data, isAuthenticated: true, isLoading: false });
           toast.success("Welcome to VEXORA");
-        } catch (error) {
-          const err = error as AxiosError<{ message: string }>;
-          console.log("error", err);
-          toast.success("Welcome to VEXORA");
+        } catch {
+          toast("Please login");
           set({ user: null, isAuthenticated: false, isLoading: false });
         }
       },
@@ -62,9 +60,8 @@ const useAuthStore = create<AuthState>()(
           toast.success("Sign up successful");
         } catch (error) {
           const err = error as AxiosError<{ message: string }>;
-
-          toast.error(err.response?.data?.message || "sign up failed");
           set({ isLoading: false });
+          throw err;
         }
       },
       login: async (email: string, password: string) => {
@@ -80,8 +77,8 @@ const useAuthStore = create<AuthState>()(
         } catch (error) {
           const err = error as AxiosError<{ message: string }>;
 
-          toast.error(err.response?.data?.message || "login failed");
           set({ isLoading: false });
+          throw err;
         }
       },
       upgradeToSeller: async () => {
@@ -93,8 +90,8 @@ const useAuthStore = create<AuthState>()(
         } catch (error) {
           const err = error as AxiosError<{ message: string }>;
 
-          toast.error(err.response?.data?.message || "Seller upgrade failed");
           set({ isLoading: false });
+          throw err;
         }
       },
 

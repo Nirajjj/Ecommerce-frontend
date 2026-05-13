@@ -29,6 +29,7 @@ const Product = () => {
 
   const addItem = useCartStore((state) => state.addItem);
   const cartItems = useCartStore((state) => state.cartItems);
+  const addBuyItem = useCartStore((state) => state.addBuyItem);
   const user = useAuthStore((state) => state.user);
   const isInCart = cartItems.some((item) => item._id === id);
   const { data, isLoading, isError } = useFetchProduct(id ?? "");
@@ -75,8 +76,18 @@ const Product = () => {
     }
   };
   const handleBuy = () => {
+    addBuyItem({
+      _id: id,
+      name,
+      description,
+      quantity: 1,
+      price,
+      mrp,
+      images,
+    });
     if (!user?._id) {
       setShowLogin(true);
+      return;
     }
     navigate("/user/checkout", {
       state: { product: { ...data!.data, displayMrp, finalDiscount } },
@@ -85,13 +96,13 @@ const Product = () => {
 
   return (
     <>
-      {showLogin && (
-        <LoginModal
-          setShowLogin={setShowLogin}
-          roles={["customer"]}
-          navigateTo={"/user/checkout"}
-        />
-      )}
+      <LoginModal
+        showLogin={showLogin}
+        setShowLogin={setShowLogin}
+        roles={["customer"]}
+        navigateTo={"/user/checkout"}
+      />
+
       <div className={styles.productContainer}>
         <div className={styles.imageContainer}>
           {isMobile ? (

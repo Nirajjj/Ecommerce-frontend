@@ -36,7 +36,7 @@ export default function Cart() {
         ))}
       </div>
 
-      <PriceDetails items={cartItems} />
+      <PriceDetails />
     </div>
   );
 }

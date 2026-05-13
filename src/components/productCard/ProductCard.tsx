@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 
 const ProductCard = ({ product }: { product: Product }) => {
+  console.log(product);
   const { name, price, images, mrp } = product;
   const [rating] = useState(() => Number((Math.random() * 5).toFixed(1)));
 

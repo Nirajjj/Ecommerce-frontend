@@ -57,6 +57,7 @@ const ProductForm = ({
     formState: { errors, isSubmitting },
   } = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
+    mode: "onBlur",
     values: {
       name: product?.name ?? "",
       description: product?.description ?? "",
@@ -142,7 +143,7 @@ const ProductForm = ({
         if (response.status === "success") {
           toast.success("Product created successfully");
           queryClient.invalidateQueries({
-            queryKey: ["sellerProducts", product, productId],
+            queryKey: ["sellerProducts"],
           });
         }
       }
@@ -224,6 +225,7 @@ const ProductForm = ({
             id="mrp"
             type="number"
             placeholder="MRP"
+            onWheel={(e) => e.currentTarget.blur()}
             {...register("mrp", { valueAsNumber: true })}
           />
           <FormError message={errors.mrp?.message} />
@@ -235,6 +237,7 @@ const ProductForm = ({
             id="price"
             type="number"
             placeholder="Price"
+            onWheel={(e) => e.currentTarget.blur()}
             {...register("price", { valueAsNumber: true })}
           />
           <FormError message={errors.price?.message} />
@@ -246,6 +249,7 @@ const ProductForm = ({
             id="stock"
             type="number"
             placeholder="Stock"
+            onWheel={(e) => e.currentTarget.blur()}
             {...register("stock", { valueAsNumber: true })}
           />
           <FormError message={errors.stock?.message} />
