@@ -2,30 +2,51 @@ import styles from "./Checkout.module.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { RazorpayOptions, RazorpayResponse } from "@/types/razorpay";
-import type { SingleProduct } from "@/types";
 import { createOrder, verifyPayment } from "@/services/order.service";
-import { env } from "@/config/evn";
+import { env } from "@/config/env"; // Fixed typo from env to evn based on your original code if needed
 import useCartStore from "@/store/useCartStore";
 
-interface CheckoutProduct extends SingleProduct {
-  displayMrp: number;
-  finalDiscount: number;
-}
 const Checkout = () => {
   const location = useLocation();
-  const buyItem = useCartStore((state) => state.buyItem);
-  const product: CheckoutProduct = location.state?.product || buyItem;
-
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  useEffect(() => {}, []);
-  if (!product) {
-    console.warn("No product found in location state");
+
+  // 1. Determine Checkout Intent (Default to 'cart')
+  const checkoutType = location.state?.checkoutType || "cart";
+
+  // 2. Fetch required state and actions from Zustand
+  const cartItems = useCartStore((state) => state.cartItems);
+  const buyItem = useCartStore((state) => state.buyItem);
+  const getCartTotals = useCartStore((state) => state.getCartTotals);
+
+  // 3. Unify the Data Structure
+  // If user clicked "Buy Now", we wrap the single item in an array. Otherwise, use cart items.
+  const checkoutItems =
+    checkoutType === "buy_now" && buyItem ? [buyItem] : cartItems;
+
+  // 4. Calculate Totals Dynamically based on intent
+  const delivery = 40;
+  let totalMrp = 0;
+  let totalDiscount = 0;
+  let finalAmount = 0;
+
+  if (checkoutType === "buy_now" && buyItem) {
+    totalMrp = buyItem.mrp * buyItem.quantity;
+    totalDiscount = (buyItem.mrp - buyItem.price) * buyItem.quantity;
+    finalAmount = buyItem.price * buyItem.quantity + delivery;
+  } else {
+    // Rely on the centralized math from the store
+    const totals = getCartTotals();
+    totalMrp = totals.totalPrice; // In your store logic, totalPrice represents total MRP
+    totalDiscount = totals.totalDiscount;
+    finalAmount = totals.finalAmount; // Includes delivery and platform fees based on your store
   }
 
-  const total = product.price;
-  const delivery = 40;
-  const finalAmount = total + delivery;
+  useEffect(() => {
+    if (checkoutItems.length === 0) {
+      console.warn("No products found for checkout");
+    }
+  }, [checkoutItems]);
 
   const handlePayment = async () => {
     if (!address.trim()) {
@@ -37,19 +58,13 @@ const Checkout = () => {
 
     try {
       // 1️⃣ Create order from backend
-      // const res = await fetch("/api/orders/create-order", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     amount: finalAmount * 100, // Razorpay uses paise
-      //   }),
-      // });
+      // Note: If checking out a full cart, your backend 'createOrder' might need to be
+      // updated to accept an array of items instead of a single 'productId'.
+      // For now, we pass the first item to prevent breaking your existing backend structure.
       const res = await createOrder({
         shippingAddress: address,
-        productId: product._id,
-        quantity: 1,
+        productId: checkoutItems[0]?._id,
+        quantity: checkoutItems.length === 1 ? checkoutItems[0].quantity : 1,
       });
 
       // 2️⃣ Open Razorpay
@@ -58,7 +73,10 @@ const Checkout = () => {
         amount: res.data.amount,
         currency: "INR",
         name: "Your Store",
-        description: product.name,
+        description:
+          checkoutItems.length === 1
+            ? checkoutItems[0].name
+            : `Order of ${checkoutItems.length} items`,
         order_id: res.data.razorpay_order_id,
         handler: async function (response: RazorpayResponse) {
           const data = {
@@ -70,8 +88,7 @@ const Checkout = () => {
           const verifyRes = await verifyPayment(data);
           if (verifyRes.status === "success") {
             alert("Payment Successful");
-
-            // Optional: verify payment on backend
+            // Optional: clear cart here using useCartStore.getState().clearCart()
           } else {
             alert("Payment Failed");
           }
@@ -95,9 +112,18 @@ const Checkout = () => {
     }
   };
 
+  // Graceful fallback if somehow accessed with empty cart/buy item
+  if (checkoutItems.length === 0) {
+    return (
+      <div className={styles.container}>
+        <h2>No items to checkout. Please go back and add items.</h2>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
-      {/* LEFT */}
+      {/* LEFT: Address & Dynamic Products Map */}
       <div className={styles.left}>
         <h2>Delivery Address</h2>
         <textarea
@@ -107,31 +133,34 @@ const Checkout = () => {
           onChange={(e) => setAddress(e.target.value)}
         />
 
-        <h2>Product</h2>
-        <div className={styles.product}>
-          <img src={product.images[0].url} alt={product.name} />
-          <div>
-            <h3>{product.name}</h3>
-            <p>Qty: 1</p>
-            <p>₹{product.price}</p>
+        <h2>Products ({checkoutItems.length} items)</h2>
+        {/* We map over the array instead of hardcoding one product */}
+        {checkoutItems.map((item) => (
+          <div key={item._id} className={styles.product}>
+            <img src={item.images[0].url} alt={item.name} />
+            <div>
+              <h3>{item.name}</h3>
+              <p>Qty: {item.quantity}</p>
+              <p>₹{item.price}</p>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
-      {/* RIGHT */}
+      {/* RIGHT: Order Summary */}
       <div className={styles.right}>
         <h2>Order Summary</h2>
         <div className={styles.row}>
           <span>MRP</span>
-          <span>₹{product.displayMrp}</span>
+          <span>₹{totalMrp}</span>
         </div>
         <div className={styles.row}>
           <span>Discount</span>
-          <span>- ₹{product.displayMrp - product.price}</span>
+          <span style={{ color: "green" }}>- ₹{totalDiscount}</span>
         </div>
         <div className={styles.row}>
           <span>Price</span>
-          <span>₹{total}</span>
+          <span>₹{totalMrp - totalDiscount}</span>
         </div>
 
         <div className={styles.row}>
@@ -151,7 +180,7 @@ const Checkout = () => {
           onClick={handlePayment}
           disabled={loading}
         >
-          {loading ? "Processing..." : "Pay with Razorpay"}
+          {loading ? "Processing..." : `Pay ₹${finalAmount}`}
         </button>
       </div>
     </div>

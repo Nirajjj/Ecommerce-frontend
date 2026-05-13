@@ -1,4 +1,4 @@
-import { env } from "@/config/evn";
+import { env } from "@/config/env";
 import ReactGA from "react-ga4";
 
 export const initAnalytics = () => {

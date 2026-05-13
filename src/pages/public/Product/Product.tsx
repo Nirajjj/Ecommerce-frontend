@@ -90,17 +90,16 @@ const Product = () => {
       return;
     }
     navigate("/user/checkout", {
-      state: { product: { ...data!.data, displayMrp, finalDiscount } },
+      state: { checkoutType: "buy_now" }, // ✅ Clean, flat state
     });
   };
-
   return (
     <>
       <LoginModal
         showLogin={showLogin}
         setShowLogin={setShowLogin}
         roles={["customer"]}
-        navigateTo={"/user/checkout"}
+        navigateTo={""}
       />
 
       <div className={styles.productContainer}>
